@@ -6,6 +6,7 @@ import com.shopwave.exception.ProductNotFoundException;
 import com.shopwave.mapper.ProductMapper;
 import com.shopwave.model.Category;
 import com.shopwave.model.Product;
+import com.shopwave.repository.CategoryRepository;
 import com.shopwave.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
     private final ProductMapper productMapper;
 
     /**
@@ -43,8 +45,8 @@ public class ProductService {
 
         // link to a category if one was provided
         if (request.getCategoryId() != null) {
-            Category category = new Category();
-            category.setId(request.getCategoryId());
+            Category category = categoryRepository.findById(request.getCategoryId())
+                    .orElseThrow(() -> new IllegalArgumentException("Category not found with id: " + request.getCategoryId()));
             product.setCategory(category);
         }
 

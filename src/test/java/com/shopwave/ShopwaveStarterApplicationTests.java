@@ -1,4 +1,4 @@
-package com.shopwave.shopwave_starter;
+package com.shopwave;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
